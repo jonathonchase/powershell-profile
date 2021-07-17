@@ -55,12 +55,14 @@ function prompt {
 # From http://get-powershell.com/post/2008/06/25/Stuffing-the-output-of-the-last-command-into-an-automatic-variable.aspx
 function out-default {
   $input | Tee-Object -var global:lastobject | Microsoft.PowerShell.Core\out-default
-}
-
-# If you prefer oh-my-posh
-# Import-Module posh-git
-# Import-Module oh-my-posh
 
 function rename-extension($newExtension){
   Rename-Item -NewName { [System.IO.Path]::ChangeExtension($_.Name, $newExtension) }
 }
+
+}
+
+# If you prefer oh-my-posh
+Import-Module posh-git
+Import-Module oh-my-posh
+Set-PoshPrompt -Theme powerlevel10k_modern

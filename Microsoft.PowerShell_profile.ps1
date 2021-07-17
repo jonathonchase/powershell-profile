@@ -4,7 +4,7 @@
 # Set-ExecutionPolicy unrestricted
 
 # So we can launch pwsh in subshells if we need
-Add-PathVariable "${env:ProgramFiles}\PowerShell\6-preview"
+Add-PathVariable "${env:ProgramFiles}\PowerShell\7"
 
 $profileDir = $PSScriptRoot;
 
@@ -38,35 +38,6 @@ function disable-windows-search {
 	stop-service wsearch
 }
 
-# http://mohundro.com/blog/2009/03/31/quickly-extract-files-with-powershell/
-# and https://stackoverflow.com/questions/1359793/programmatically-extract-tar-gz-in-a-single-step-on-windows-with-7zip
-# function expand-archive([string]$file, [string]$outputDir = '') {
-# 	if (-not (Test-Path $file)) {
-# 		$file = Resolve-Path $file
-# 	}
-
-# 	$baseName = get-childitem $file | select-object -ExpandProperty "BaseName"
-
-# 	if ($outputDir -eq '') {
-# 		$outputDir = $baseName
-# 	}
-
-# 	# Check if there's a tar inside
-# 	# We use the .net method as this file (x.tar) doesn't exist!
-# 	$secondExtension = [System.IO.Path]::GetExtension($baseName)
-# 	$secondBaseName = [System.IO.Path]::GetFileNameWithoutExtension($baseName)
-
-# 	if ( $secondExtension -eq '.tar' ) {
-# 		# This is a tarball
-# 		$outputDir = $secondBaseName
-# 		write-output "Output dir will be $outputDir"		
-# 		7z x $file -so | 7z x -aoa -si -ttar -o"$outputDir"
-# 		return
-# 	} 
-# 	# Just extract the file
-# 	7z x "-o$outputDir" $file	
-# }
-
 set-alias unzip expand-archive
 
 function get-path {
@@ -76,11 +47,6 @@ function get-path {
 function Test-FileInSubPath([System.IO.DirectoryInfo]$Child, [System.IO.DirectoryInfo]$Parent) {
 	write-host $Child.FullName | select-object '*'
 	$Child.FullName.StartsWith($Parent.FullName)
-}
-
-function stree {
-	$SourceTreeFolder =  get-childitem ("${env:LOCALAPPDATA}" + "\SourceTree\app*") | Select-Object -first 1
-	& $SourceTreeFolder/SourceTree.exe -f .
 }
 
 function get-serial-number {
@@ -96,8 +62,6 @@ foreach ( $includeFile in ("aws", "defaults", "openssl", "aws", "unix", "develop
 . "$profileDir\$includeFile.ps1"
 }
 
-set-location '~/Code'
+set-location '~'
 
-write-output 'Mike profile loaded.'
-
-
+write-output 'profile loaded.'
