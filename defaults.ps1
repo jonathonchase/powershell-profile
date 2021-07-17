@@ -65,4 +65,6 @@ function rename-extension($newExtension){
 # If you prefer oh-my-posh
 Import-Module posh-git
 Import-Module oh-my-posh
-Set-PoshPrompt -Theme powerlevel10k_modern
+Set-PoshPrompt -Theme slim
+
+$Env:GIT_SSH=$((Get-Command -Name ssh).Source)
